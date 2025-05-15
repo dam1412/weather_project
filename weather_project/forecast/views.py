@@ -19,7 +19,8 @@ import os
 API_KEY='c10735208c8617f07e9dadb5230018c5'
 BASE_URL='https://api.openweathermap.org/data/2.5/' #base URL for making API request
 
-firebaseURL="https://bme680-1-63c67-default-rtdb.asia-southeast1.firebasedatabase.app/bme680/list.json"
+firebaseURL="https://bme680-1-63c67-default-rtdb.asia-southeast1.firebasedatabase.app/bme680/latest.json"
+locationURL="https://map-1-b0eae-default-rtdb.asia-southeast1.firebasedatabase.app/Toa-do-hien-tai.json"
 model_dir = r"weather_project\forecast\Model_weather\Model_weather"
 
 
@@ -30,61 +31,29 @@ def get_input_data_from_sensors():
     if response.status_code != 200:
       print(f"Error fetching weather data : {data.get('message', 'Unknown error')}")
       return None  # Or raise an exception
-    keys = list(data.keys())
-    para=data[keys[-1]]
-    humidity=float(para.get("humidity"))
-    pressure=float(para.get("pressure"))
-    temperature=float(para.get("temperature"))
+    humidity=float(data['humidity'])
+    pressure=float(data['pressure'])
+    temperature=float(data['temperature'])
 
     pressure=round(pressure,1)
     temperature=round(temperature,1)
     # timestamp=para.get("timestamp")
     # list_para=[humidity,pressure,temperature,timestamp]
-    list_para=[humidity,pressure,temperature]
+    list_para=[temperature,humidity,pressure]
     my_para=np.array(list_para)
 
     return my_para.reshape(1,3)
 
-def get_current_weather_web(city):
-  url=f"{BASE_URL}weather?q={city}&appid={API_KEY}&units=metric" #construct the API request URL
-  response=requests.get(url) #send the get request to API
-  data=response.json() #parse the response to JSON format
-  # Check if the API call was successful
-  if response.status_code != 200:
-      print(f"Error fetching weather data for {city}: {data.get('message', 'Unknown error')}")
-      return None  # Or raise an exception
-      
-  # Check if the 'name' key exists in the response
-  if 'name' not in data:
-      print(f"City '{city}' not found in the weather database.")
-      return None  # Or raise an exception
-  return {
-      'city': data['name'],
-      'current_temp':round(data['main']['temp']),
-      'feels_like':round(data['main']['feels_like']),
-      'temp_min':round(data['main']['temp_min']),
-      'temp_max':round(data['main']['temp_max']),
-      'humidity':round(data['main']['humidity']),
-      'description':data['weather'][0]['description'],
-      'country':data['sys']['country'],
-      'wind_gust_dir':data['wind']['deg'],
-      'pressure':data['main']['pressure'],
-      'Wind_Gust_Speed':data['wind']['speed'],
 
-      'clouds':data['clouds']['all'],
-      'Visibility': data['visibility'],
-  }
 def get_current_data_from_sensors(city):
     response=requests.get(firebaseURL)
     data = response.json()
     if response.status_code != 200:
       print(f"Error fetching weather data : {data.get('message', 'Unknown error')}")
       return None  # Or raise an exception
-    keys = list(data.keys())
-    para=data[keys[-1]]
-    humidity=float(para.get("humidity"))
-    pressure=float(para.get("pressure"))
-    temperature=float(para.get("temperature"))
+    humidity=float(data['humidity'])
+    pressure=float(data['pressure'])
+    temperature=float(data['temperature'])
 
     pressure=round(pressure,1)
     temperature=round(temperature,1)
@@ -99,7 +68,7 @@ def get_current_data_from_sensors(city):
     if response.status_code != 200:
       print(f"Error fetching weather data for {city}: {data.get('message', 'Unknown error')}")
       return None  # Or raise an exception
-      
+
     # Check if the 'name' key exists in the response
     if 'name' not in data:
       print(f"City '{city}' not found in the weather database.")
@@ -127,6 +96,13 @@ def get_current_data_from_sensors(city):
         # 'clouds':data['clouds']['all'],
         # 'Visibility': data['visibility'],
     }
+def get_location():
+    response=requests.get(locationURL)
+    data = response.json()
+    lat_cur=round(float(data['lat_cur']),2)
+    lng_cur=round(float(data['lng_cur']),2)
+
+    return lat_cur, lng_cur
 
 
 #2. Load model 
@@ -175,7 +151,8 @@ def weather_view(request):
         hum_predict_model=load_model('hum')
 
         # rain prediction
-        rain_prediction=rain_model.predict(input_para)[0]
+        rain_prediction=rain_model.predict_proba(input_para)[:, 1]
+        percent_rain=rain_prediction[0]*100
 
         # predict future humidity and temperature
         future_temp=predict_future(temp_predict_model,input_para)
@@ -201,8 +178,7 @@ def weather_view(request):
         hum1, hum2, hum3, hum4, hum5 = future_hum
 
         # longitude and latitude
-        longitude=10
-        latitude=10
+        latitude, longitude=get_location()
         # Pass data to template
 
         context={
@@ -213,7 +189,7 @@ def weather_view(request):
             'pressure': current_weather['pressure'],
             'description':current_weather['description'],
 
-            'rainfall':f"{rain_prediction*100}",
+            'rainfall':f"{int(round(percent_rain,0))}",
 
             'longitude':longitude,
             'latitude':latitude,

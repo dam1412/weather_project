@@ -104,6 +104,12 @@ document.addEventListener('DOMContentLoaded',() => {
                         stepSize: 100,
                         callback: function(value) {
                             return value + '%';
+                        },
+                        color: '#fff',
+                        font: {
+                            size: 14, 
+                            weight: 'bold', 
+                            
                         }
                     },
                     grid: {
@@ -115,7 +121,12 @@ document.addEventListener('DOMContentLoaded',() => {
                 },
                 x: {
                     ticks: {
-                        color: '#ffffff'
+                        color: '#fff',
+                        font: {
+                            size: 14, 
+                            weight: 'bold' ,
+                            
+                        }
                     },
                     grid: {
                         color: 'rgba(12, 12, 12, 0.7)',
