@@ -103,6 +103,7 @@ document.addEventListener('DOMContentLoaded',() => {
                     ticks: {
                         stepSize: 100,
                         callback: function(value) {
+                            if (value === 0 || value === 100) return '';
                             return value + '%';
                         },
                         color: '#fff',
@@ -113,9 +114,10 @@ document.addEventListener('DOMContentLoaded',() => {
                         }
                     },
                     grid: {
-                        color: 'rgba(12, 12, 12, 0.7)',
+                        color: 'transparent',
                         lineWidth: 1,
                         drawBorder: false, 
+                        borderColor: 'transparent'
                     }
                     
                 },
@@ -129,9 +131,10 @@ document.addEventListener('DOMContentLoaded',() => {
                         }
                     },
                     grid: {
-                        color: 'rgba(12, 12, 12, 0.7)',
+                        color: 'transparent',
                         lineWidth: 1,
                         drawBorder: false,
+                        borderColor: 'transparent',
                     }
                 }
             },
