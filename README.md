@@ -1,6 +1,6 @@
 ## Setup Project
 1. git clone https://github.com/dam1412/dam.git
-2. cd dam
+2. cd weather_project
 3. pip install pipenv --user
 4. If warning missing path (eg: get warning c:\users\asus\appdata\roaming\python\python311\scripts) 
 -> windows search for "Edit the system environment variables" -> "Environment Variables" -> Double click to "Path" 
