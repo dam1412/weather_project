@@ -300,3 +300,146 @@ main.clear {
     margin: 15px auto 30px;
     width: 100%;
 }
+
+/*  */
+#map {
+    display: none;
+    height: 92vh;
+    width: 80vw;
+    position: fixed;
+    top: 32px;
+    left: 170px;
+    border-radius: 25px;
+}
+
+#status1 {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    z-index: 1;
+    color: #fff;
+}
+
+#status2 {
+    position: fixed;
+    bottom: 0px;
+    left: 50%;
+    transform: translate(-50%,0);
+    z-index: 1;
+    color: #fff;
+}
+
+#status3 {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    z-index: 1;
+    color: #fff;
+}
+
+#toggleBtn {
+    position: fixed;
+    top: 8%;
+    right: 18%;
+    /* top: 75px;
+    right: 260px; */
+    padding: 8px 16px;
+    background-color: #28a745;
+    z-index: 1;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#toggleBtn:active {
+    opacity: 0.5;
+}
+
+#confirmBtn {
+    display: none;
+    position: fixed;
+    top: 24%;
+    right: 2.5%;
+    /* right: 35px; */
+    /* padding: 16px 16px; */
+    height: 50px;
+    width: 70px;
+    background-color: #f4f410;
+    z-index: 1;
+    color: black;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#confirmBtn:active {
+    opacity: 0.5;
+}
+
+#deleteBtn {
+    display: none;
+    position: fixed;
+    top: 35%;
+    right: 2.5%;
+    /* right: 35px; */
+    /* padding: 16px 20px; */
+    height: 50px;
+    width: 70px;
+    background-color: #f4f410;
+    z-index: 1;
+    color: black;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#deleteBtn:active {
+    opacity: 0.5;
+}
+
+#map-pin {
+    display: none;
+    position: fixed;
+    top: 5%;
+    right: 1.5%;
+    /* right: 20px; */
+    background-color: white;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    font-size: 14px;
+    line-height: 1.8;
+    z-index: 1000;
+}
+
+#pin-item-1,
+#pin-item-2,
+#pin-item-3 {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 5px;
+}
+
+#pin-color-red,
+#pin-color-green,
+#pin-color-blue {
+    width: 16px;
+    height: 25px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#pin-color-red {
+    background-image: url('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png');
+}
+
+#pin-color-green {
+    background-image: url('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png');
+}
+
+#pin-color-blue {
+    background-image: url('https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png');
+}
