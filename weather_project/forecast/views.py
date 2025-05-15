@@ -57,7 +57,7 @@ def get_current_data_from_sensors(city):
 
     pressure=round(pressure,1)
     temperature=round(temperature,1)
-    # timestamp=para.get("timestamp")
+    timestamp=data['timestamp']
 
     #Data from web
 
@@ -78,7 +78,7 @@ def get_current_data_from_sensors(city):
         'temp': temperature,
         'hum' :humidity,
         'pressure':pressure,
-        # 'time':timestamp,
+        'time':timestamp,
 
         # # From web
         # 'city': data['name'],
@@ -160,9 +160,11 @@ def weather_view(request):
 
         #prepare time for future predictions
 
-        timezone=pytz.timezone('Asia/Ho_Chi_Minh')
-        now=datetime.now(timezone)
-        next_hour =now+timedelta(hours=1)
+        # timezone=pytz.timezone('Asia/Ho_Chi_Minh')
+        # now=datetime.now(timezone)
+        # next_hour =now+timedelta(hours=1)
+        time_now = datetime.strptime(current_weather['time'], "%d/%m/%Y  %H:%M:%S")
+        next_hour =time_now+timedelta(hours=1)
         next_hour = next_hour.replace(minute=0, second=0, microsecond=0)
 
         future_times=[(next_hour+timedelta(hours=i)).strftime("%H:00") for i in range(5)]
@@ -194,7 +196,8 @@ def weather_view(request):
             'longitude':longitude,
             'latitude':latitude,
 
-            'time': datetime.now(),
+            # 'time': datetime.now(),
+            'time': time_now,
             'date': datetime.now().strftime("%B %d, %Y"),
 
             
