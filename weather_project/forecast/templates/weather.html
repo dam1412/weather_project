@@ -11,15 +11,16 @@
     <title>Weather Forecast</title>
 </head>
 <body>
-  <main class="{{ description }}">
+  <main id="main" class="{{ description }}">
     <section class="side-container">
-        <form method="POST">
+        <form id="myform" method="POST">
             {% csrf_token %}
-            <button type="submit" class="search-button">
-                <div style="width: 25px;height: 25px;color: white;">
+            <button type="submit" style="display: none;" id="submit_button">
+                <!-- <div style="width: 25px;height: 25px;color: white;">
                     <i class="bi bi-skip-start-fill" style="font-size: 40px;"></i>
-                </div>
+                </div> -->
             </button>
+
         </form>
         <div class="day-stats">
             <h2 class="day-stats__temperature">
@@ -123,7 +124,7 @@
         
     </section>
   </main>
-
+  <div id="startimage"></div>
    <!--  -->
     <button id="toggleBtn">Hide map</button>
     <button id="confirmBtn"><b>Confirm</b></button>
@@ -150,6 +151,7 @@
             <span><b>Tọa độ 3</b></span>
         </div>
     </div>
+    
 
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>

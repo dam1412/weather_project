@@ -206,5 +206,36 @@ document.addEventListener('DOMContentLoaded', () => {
         .openPopup();
     }
   });
+  var chance=0;
+  db.ref("n").on("value",(snapshot) => {
+    const current_value=snapshot.val();
+    console.log(current_value);
+    
+    
+    const start_img=document.getElementById('startimage');
+    const main=document.getElementById('main');
+    const post=document.getElementById('submit_button');
+    if ((current_value === 0 ) ) {
+        console.log('bbbb');    
+        start_img.style.display = 'flex';
+        main.style.display='none';
+        chance=1;
+    }
+    if (current_value === 1 || current_value===2 || current_value === 3) {
+        console.log('aaaaa');
+
+        start_img.style.display = 'none';
+        main.style.display='flex';
+        if (chance ===1) {
+            post.click();
+            chance=2;
+        }
+        
+    }
+    
+  });
+  
+
+
 
 });
