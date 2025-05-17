@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded',() => {
             labels: times,
             datasets: [
                 {
-                    label: 'Celsius Degrees',
+                    label: 'Temperature',
                     data: temps,
                     borderColor: gradient,
                     borderWidth: 2,

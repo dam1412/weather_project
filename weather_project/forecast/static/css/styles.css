@@ -281,7 +281,7 @@ main.clear {
 
 .forecast-temperature {
     color: #fff;
-    font-size: 40px;
+    font-size: 35px;
     font-weight: 300;
     line-height: 100%;
 }
@@ -294,7 +294,7 @@ main.clear {
 
 #chart-temperature {
     margin: 30px auto 10px;
-    width: 85%;
+    width: 100%;
 }
 #chart-humidity {
     margin: 15px auto 30px;
